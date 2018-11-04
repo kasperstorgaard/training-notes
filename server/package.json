@@ -1,0 +1,33 @@
+{
+  "name": "training-notes-client",
+  "version": "0.1.0",
+  "description": "app to keep track of and take notes for your training sessions",
+  "main": "./main.js",
+  "scripts": {
+    "debug": "DEBUG=express:* npm run start",
+    "dev": "nodemon \"npm run start\"",
+    "start": "node ./main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "training",
+    "notes"
+  ],
+  "author": "kasperstorgaard",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.5"
+  },
+  "nodemonConfig": {
+    "ext": "*.js, *.ejs, *.css",
+    "ignore": [
+      "test/*",
+      "features/*"
+    ]
+  }
+}
