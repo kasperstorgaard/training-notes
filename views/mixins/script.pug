@@ -1,0 +1,5 @@
+mixin script(path, moduleSupport=true)
+  script(
+    src=`js/${moduleSupport ? 'module' : 'nomodule'}/${path}`
+    type=moduleSupport ? 'module' : false
+  )

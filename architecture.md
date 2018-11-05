@@ -17,6 +17,15 @@
 - can contain assets, strings
 - composes client components
 
+### Server side router requirements ###
+- MUST serve a layout
+- MUST populate layout areas with relevant views
+- CAN cache layout and views
+- CAN provide bootstrapped state for client
+- MUST import proper client scripts
+- MUST include stylesheets
+- CAN bundle client side scripts
+
 ## Client ##
 ### Areas ###
 - global styles
@@ -42,13 +51,7 @@
 - CANNOT contain multiple views, must delegate to sub routing
 - CANNOT contain assets
 
-### Server side router requirements ###
-- MUST serve a layout
-- MUST populate layout areas with relevant views
-- CAN cache layout and views
-- CAN provide bootstrapped state for client
-
-### Stack example (v0) ###
+## Stack example (v0) ###
 - Server: NodeJS with express
 - Server - templating: EJS
 - Server - localization: ICU with intl-messageformat-parser
@@ -64,6 +67,6 @@
 - Style preprocessor: native css custom properties, with autoprefixer
 - CI: Travis
 
-### Application requirements ###
+## Application requirements ###
 - Client max size: 50kb gzipped
-- 
+- TTI?

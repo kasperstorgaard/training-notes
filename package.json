@@ -1,0 +1,48 @@
+{
+  "name": "training-notes-client",
+  "version": "0.1.0",
+  "description": "app to keep track of and take notes for your training sessions",
+  "main": "./main.js",
+  "scripts": {
+    "build:js": "rollup -c",
+    "clean": "rimraf ./public",
+    "dev:client": "rollup -c -w",
+    "dev:server": "nodemon \"npm run build\"",
+    "dev": "run-p dev:*",
+    "server": "node ./main.js",
+    "start": "run-s clean build:* server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "training",
+    "notes"
+  ],
+  "author": "kasperstorgaard",
+  "license": "ISC",
+  "dependencies": {
+    "@polymer/lit-element": "^0.6.2",
+    "chalk": "^2.4.1",
+    "express": "^4.16.4",
+    "pug": "^2.0.3",
+    "pwa-helpers": "^0.9.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "nodemon": "^1.18.5",
+    "npm-run-all": "^4.1.3",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.67.0",
+    "rollup-plugin-alias": "^1.4.0",
+    "rollup-plugin-node-resolve": "^3.4.0"
+  },
+  "nodemonConfig": {
+    "ext": "*.js, *.pug, *.css",
+    "ignore": [
+      "public/*",
+      "client/*",
+      "test/*",
+      "features/*"
+    ]
+  }
+}
