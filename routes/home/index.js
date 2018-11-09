@@ -10,8 +10,7 @@ router.get('/', (req, res, _next) => {
   if (!referrer || referrer.hostname !== req.hostname) {
     res.render('home/home', {
       page: 'Home',
-      menuId: 'home',
-      partials: partialsConfig
+      menuId: 'home'
     });
   } else {
     res.json({
