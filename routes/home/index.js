@@ -1,37 +1,23 @@
 const express = require('express');
+const url = require('url');
 
 const router = express.Router();
 
-const partialsConfig = {
-  main: 'partials/home'
-};
-
 router.get('/', (req, res, _next) => {
-  const data = {};
-  console.log('req');
+  const referrerUrl = req.header('Referrer');
+  const referrer = referrerUrl ? url.parse(referrerUrl) : null;
 
-  if (req.partialName
-    console.log('xhrrrrr....');
-    res.json({
-      partials: renderPartials(partialsConfig)
-    })
-  } else {
+  if (!referrer || referrer.hostname !== req.hostname) {
     res.render('home/home', {
       page: 'Home',
       menuId: 'home',
       partials: partialsConfig
     });
+  } else {
+    res.json({
+      hello: 'hi :)'
+    })
   }
 });
-
-function renderPartials(config) {
-  const keys = Object.keys(config);
-  return keys.reduce((lookup, key) => {
-    const partialName = config[key];
-    lookup[key] = renderPartial(partialName);
-    return lookup;
-  }, {});
-}
-
 
 module.exports = router;
