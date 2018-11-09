@@ -1,12 +1,16 @@
 const express = require('express');
 const url = require('url');
 const lex = require('pug-lexer')
-const parser = require('pug-parser')
+const parse = require('pug-parser')
+const load = require('pug-load')
+const generateCode = require('pug-code-gen');
+const wrap = require('pug-runtime/wrap');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
 
 const router = express.Router();
+const viewDir = path.join(__dirname, '../../views');
 
 router.get('/calendar', async (req, res, _next) => {
   const referrerUrl = req.header('Referrer');
@@ -18,18 +22,34 @@ router.get('/calendar', async (req, res, _next) => {
       menuId: 'calendar'
     });
   } else {
-    const filePath = path.join(__dirname, '../../views/calendar/calendar.pug');
-    const parsed = await getBlocks(filePath);
-    res.json({ parsed });
+    const html = getBlocks('bar.pug')
+    res.json({ html });
   }
 });
 
-async function getBlocks(filePath) {
-  const filename = path.basename(filePath);
-  const content = await util.promisify(fs.readFile)(filePath, 'utf8');
-  const lexed = lex(content, {filename});
-  const parsed = parser(lexed, {filename, src: content});
-  return parsed;
+function loadAst(view) {
+  const filePath = path.join(__dirname, view);
+  return load.file(filePath, {
+    lex,
+    parse
+  });
+}
+
+function getBlocks(view) {
+  try {
+    const ast = loadAst(view);
+
+    // console.log(JSON.stringify(content));
+    const fn = wrap(generateCode(ast, {
+      compileDebug: false,
+      pretty: true,
+      inlineRuntimeFunctions: false,
+      templateName: 'helloWorld'
+    }), 'helloWorld');
+    return fn();
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 module.exports = router;
