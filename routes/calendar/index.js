@@ -8,6 +8,7 @@ const wrap = require('pug-runtime/wrap');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
+const link = require('pug-linker');
 
 const router = express.Router();
 const viewDir = path.join(__dirname, '../../views');
@@ -22,17 +23,17 @@ router.get('/calendar', async (req, res, _next) => {
       menuId: 'calendar'
     });
   } else {
-    const html = getBlocks('bar.pug')
+    const html = getBlocks('../../views/calendar/calendar.pug')
     res.json({ html });
   }
 });
 
 function loadAst(view) {
   const filePath = path.join(__dirname, view);
-  return load.file(filePath, {
+  return link(load.file(filePath, {
     lex,
     parse
-  });
+  }));
 }
 
 function getBlocks(view) {
