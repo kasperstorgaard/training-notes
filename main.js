@@ -2,8 +2,8 @@ const express = require('express');
 const chalk = require('chalk');
 const path = require('path');
 
-const homeRouter = require('./routes/home/index');
-const calendarRouter = require('./routes/calendar/index');
+const homeRouter = require('./routes/home');
+const calendarRouter = require('./routes/calendar');
 
 const app = express();
 const port = 3000;
