@@ -10,6 +10,21 @@ module.exports.routerHelper = (view, config) => async (req, res, _next) => {
     res.render(view, config)
   } else {
     const blocks = getBlocks(view);
-    res.json({blocks});
+
+    const filePaths = [];
+
+    blocks.forEach(block => {
+      console.log(block.content);
+      const filePath = `/api/partials/${block.name}.html`;
+      filePaths.push(filePath);
+
+      const stream = res.push(filePath, {
+        request: {accept: '*/*'},
+        response: {'content-type': 'text/html'}
+      });
+      stream.end(block.content);
+    });
+
+    res.json({filePaths});
   }
 };

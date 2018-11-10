@@ -2,3 +2,6 @@ dist/
 public/
 .cache/
 node_modules/
+.crt
+.csr
+.key

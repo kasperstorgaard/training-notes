@@ -16,9 +16,30 @@ installRouter((location) => {
   fetch(location.href).then(response => {
     if (response.ok) {
       response.json().then(data => {
+        data.filePaths.forEach(filePath => swapFile(filePath));
         console.log(data)
       });
     }
   });
 });
+
+function swapFile(filePath) {
+  const req = fetch(filePath);
+  const name = /\/([^\/]+)\.[^.]+$/.exec(filePath)[1];
+  const fragmentId = `fragment-${name}`;
+
+  const fragment = document.getElementById(fragmentId);
+
+  req.then(response => {
+    if (response.ok) {
+      response.text().then(text => {
+        fragment.innerHTML = text;
+        console.log([
+          `hotswapped fragment: ${fragmentId}`,
+          `with html of: ${filePath}`
+        ].join('\n'))
+      });
+    }
+  });
+}
 
