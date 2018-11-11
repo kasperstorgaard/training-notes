@@ -5,8 +5,12 @@ const generateCode = require('pug-code-gen');
 const wrap = require('pug-runtime/wrap');
 const path = require('path');
 const link = require('pug-linker');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const {promisify} = require('util');
 
 const viewDir = path.join(__dirname, '../views');
+const publicDir = path.join(__dirname, '../public');
 
 const ensurePug = ensureSuffix('.pug');
 
@@ -32,30 +36,46 @@ function loadAst(view) {
   }));
 }
 
-module.exports.getBlocks = (view, locals = {}) => {
+module.exports.getBlocks = async (view, locals = {}) => {
   const ast = loadAst(view);
 
   const blockKeys = Object.keys(ast.declaredBlocks);
 
-  return blockKeys.map(blockKey => {
+  return await Promise.all(blockKeys.map(async blockKey => {
     const block = ast.declaredBlocks[blockKey];
     const name = `${view}/${blockKey}`;
-    const templateName = getTemplateName(name);
 
-    const content = block.map(inner =>
-      wrap(generateCode(inner, {
-        compileDebug: false,
-        pretty: true,
-        inlineRuntimeFunctions: false,
-        templateName,
-      }), templateName)(locals)
-    ).join('\n');
-
+    const content = await getContent(block, name, {});
     return {name, content};
-  });
+  }));
 }
 
 function getTemplateName (name) {
   return name
     .replace(/\/[\w\W]/g, m => m[1].toUpperCase());
+}
+
+async function getContent(block, name, locals) {
+  const filePath = `/html/${name}.html`;
+  const htmlPath = path.join(publicDir, filePath);
+
+  if (await promisify(fs.exists)(htmlPath)) {
+    return await promisify(fs.readFile)(htmlPath, 'utf8');
+  }
+
+  const templateName = getTemplateName(name);
+
+  const content = block.map(inner =>
+    wrap(generateCode(inner, {
+      compileDebug: false,
+      pretty: true,
+      inlineRuntimeFunctions: false,
+      templateName,
+    }), templateName)(locals)
+  ).join('\n');
+
+  const dirPath = path.dirname(htmlPath);
+  await promisify(mkdirp)(dirPath);
+  await promisify(fs.writeFile)(htmlPath, content, 'utf8');
+  return content;
 }
