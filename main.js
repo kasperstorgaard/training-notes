@@ -3,6 +3,7 @@ const path = require('path');
 
 const spdy = require('spdy')
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const chalk = require('chalk');
 const logger = require('morgan')
 
@@ -20,28 +21,12 @@ const options = {
 // setup
 app.set('view engine', 'pug');
 app.use(logger('dev'))
+app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './public')));
 
 // routes
 app.use(homeRouter);
 app.use(calendarRouter);
-
-app.get('/pushy', (req, res) => {
-  var stream = res.push('/main.js', {
-    status: 200, // optional
-    method: 'GET', // optional
-    request: {
-      accept: '*/*'
-    },
-    response: {
-      'content-type': 'application/javascript'
-    }
-  })
-  stream.on('error', function() {
-  })
-  stream.end('alert("hello from push stream!");')
-  res.end('<script src="/main.js"></script>')
-})
 
 spdy
   .createServer(options, app)

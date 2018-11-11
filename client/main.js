@@ -15,10 +15,9 @@ installRouter((location) => {
 
   fetch(location.href).then(response => {
     if (response.ok) {
-      response.json().then(data => {
-        data.filePaths.forEach(filePath => swapFile(filePath));
-        console.log(data)
-      });
+      response.json().then(data => 
+        data.filePaths.forEach(filePath => swapFile(filePath))
+      );
     }
   });
 });
@@ -29,6 +28,7 @@ function swapFile(filePath) {
   const fragmentId = `fragment-${name}`;
 
   const fragment = document.getElementById(fragmentId);
+
 
   req.then(response => {
     if (response.ok) {
