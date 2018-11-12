@@ -6,7 +6,8 @@ export default {
   experimentalCodeSplitting: true,
   input: {
     'main': './client/main.js',
-    'components/nav': './client/components/nav/index.js'
+    'components/nav': './client/components/nav/index.js',
+    'components/calendar': './client/components/calendar.js'
   },
   output: [
   // ES module version, for modern browsers

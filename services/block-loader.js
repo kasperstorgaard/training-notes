@@ -7,6 +7,7 @@ const path = require('path');
 const link = require('pug-linker');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
+const hasha = require('hasha');
 const {promisify} = require('util');
 
 const viewDir = path.join(__dirname, '../views');
@@ -46,7 +47,8 @@ module.exports.getBlocks = async (view, locals = {}) => {
     const name = `${view}/${blockKey}`;
 
     const content = await getContent(block, name, {});
-    return {name, content};
+    const hash = hasha(content, {algorithm: 'md5'});
+    return {name, content, hash};
   }));
 }
 

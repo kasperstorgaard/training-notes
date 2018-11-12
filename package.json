@@ -8,7 +8,7 @@
     "clean": "rimraf ./public",
     "dev:client": "rollup -c -w",
     "dev:server": "nodemon \"npm run build\"",
-    "dev": "run-p dev:*",
+    "dev": "run-s clean && run-p dev:*",
     "server": "node ./main.js",
     "start": "run-s clean build:* server",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,6 +24,7 @@
     "chalk": "^2.4.1",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
+    "hasha": "^3.0.0",
     "mkdirp": "^0.5.1",
     "morgan": "^1.9.1",
     "pug": "^2.0.3",
