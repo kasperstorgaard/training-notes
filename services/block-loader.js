@@ -10,6 +10,11 @@ const mkdirp = require('mkdirp');
 const hasha = require('hasha');
 const {promisify} = require('util');
 
+const mkdirpAsync = promisify(mkdirp);
+const writeFileAsync = promisify(fs.writeFile);
+const existsAsync = promisify(fs.exists);
+const readFileAsync = promisify(fs.readFile);
+
 const viewDir = path.join(__dirname, '../views');
 const publicDir = path.join(__dirname, '../public');
 
@@ -28,23 +33,27 @@ function ensureSuffix(suffix) {
 function loadAst(view) {
   const filePath = path.join(viewDir, ensurePug(view));
 
-  return link(load.file(filePath, {
+  const ast = load.file(filePath, {
     lex,
     parse,
     resolve: function (filename, source, options) {
       return load.resolve(ensurePug(filename), ensurePug(source), options);
     }
-  }));
+  });
+
+  return link(ast);
 }
 
 module.exports.getBlocks = async (view, locals = {}) => {
   const ast = loadAst(view);
-
   const blockKeys = Object.keys(ast.declaredBlocks);
 
   return await Promise.all(blockKeys.map(async blockKey => {
     const block = ast.declaredBlocks[blockKey];
     const name = `${view}/${blockKey}`;
+    if (block.length && block[0].nodes) {
+      block[0].nodes.unshift(...getMixinNodes(ast.nodes));
+    }
 
     const content = await getContent(block, name, {});
     const hash = hasha(content, {algorithm: 'md5'});
@@ -61,8 +70,8 @@ async function getContent(block, name, locals) {
   const filePath = `/html/${name}.html`;
   const htmlPath = path.join(publicDir, filePath);
 
-  if (await promisify(fs.exists)(htmlPath)) {
-    return await promisify(fs.readFile)(htmlPath, 'utf8');
+  if (await existsAsync(htmlPath)) {
+    return await readFileAsync(htmlPath, 'utf8');
   }
 
   const templateName = getTemplateName(name);
@@ -77,7 +86,11 @@ async function getContent(block, name, locals) {
   ).join('\n');
 
   const dirPath = path.dirname(htmlPath);
-  await promisify(mkdirp)(dirPath);
-  await promisify(fs.writeFile)(htmlPath, content, 'utf8');
+  await mkdirpAsync(dirPath);
+  await writeFileAsync(htmlPath, content, 'utf8');
   return content;
+}
+
+function getMixinNodes(nodes) {
+  return nodes.filter(node => node.type === 'Block' && node.nodes[0].type === 'Mixin');
 }
