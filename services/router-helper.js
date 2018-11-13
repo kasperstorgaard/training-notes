@@ -17,7 +17,7 @@ module.exports.routerHelper = (view, config) => async (req, res, _next) => {
       const filePath = `/html/${fragment.name}.html`;
       filePaths.push(filePath);
 
-      if (!req.cookies[filePath] !== fragment.hash) {
+      if (req.cookies[filePath] !== fragment.hash) {
         res.cookie(filePath, fragment.hash);
 
         const stream = res.push(filePath, {
