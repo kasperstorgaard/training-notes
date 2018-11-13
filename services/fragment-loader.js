@@ -1,6 +1,6 @@
-const lex = require('pug-lexer')
-const parse = require('pug-parser')
-const load = require('pug-load')
+const lex = require('pug-lexer');
+const parse = require('pug-parser');
+const load = require('pug-load');
 const generateCode = require('pug-code-gen');
 const wrap = require('pug-runtime/wrap');
 const path = require('path');
@@ -44,7 +44,7 @@ function loadAst(view) {
   return link(ast);
 }
 
-module.exports.getBlocks = async (view, locals = {}) => {
+module.exports.getFragments = async (view, locals = {}) => {
   const ast = loadAst(view);
   const blockKeys = Object.keys(ast.declaredBlocks);
 

@@ -1,7 +1,7 @@
 const url = require('url');
 const path = require('path');
 
-const {getBlocks} = require('./block-loader');
+const {getFragments} = require('./fragment-loader');
 
 module.exports.routerHelper = (view, config) => async (req, res, _next) => {
   const referrerUrl = req.header('Referrer');
@@ -10,34 +10,29 @@ module.exports.routerHelper = (view, config) => async (req, res, _next) => {
   if (!referrer || referrer.hostname !== req.hostname) {
     res.render(view, config)
   } else {
-    const blocks = await getBlocks(view);
+    const fragments = await getFragments(view);
     const filePaths = [];
 
-    blocks.forEach(block => {
-      const filePath = `/html/${block.name}.html`;
+    fragments.forEach(fragment => {
+      const filePath = `/html/${fragment.name}.html`;
       filePaths.push(filePath);
 
-      if (!req.cookies[filePath] !== block.hash) {
-        pushToStream(res, filePath, block);
+      if (!req.cookies[filePath] !== fragment.hash) {
+        res.cookie(filePath, fragment.hash);
+
+        const stream = res.push(filePath, {
+          request: {accept: '*/*'},
+          response: {
+            'Content-Type': 'text/html; charset=UTF-8',
+            'Etag': fragment.hash,
+            'Cache-Control': 'private, max-age=31536000'
+          }
+        });
+
+        stream.end(fragment.content);
       }
     });
 
     res.json({filePaths});
   }
 };
-
-function pushToStream(res, filePath, block) {
-  res.cookie(filePath, block.hash);
-
-  const stream = res.push(filePath, {
-    request: {accept: '*/*'},
-    response: {
-      'Content-Type': 'text/html; charset=UTF-8',
-      // TODO: use proper file hash/versioning here.
-      'Etag': block.hash,
-      'Cache-Control': 'private, max-age=31536000'
-    }
-  });
-
-  stream.end(block.content);
-}
