@@ -62,8 +62,7 @@ module.exports.getFragments = async (view, locals = {}) => {
 }
 
 function getTemplateName (name) {
-  return name
-    .replace(/\/[\w\W]/g, m => m[1].toUpperCase());
+  return name.replace(/\/[\w\W]/g, m => m[1].toUpperCase());
 }
 
 async function getContent(block, name, locals) {
