@@ -1,5 +1,6 @@
 import { installRouter } from 'pwa-helpers/router'
 
+let listeners = [];
 let isInitial = true;
 
 installRouter((location) => {
@@ -7,6 +8,8 @@ installRouter((location) => {
     window.location.href = location.href;
     return;
   }
+
+  listeners.forEach(listener => listener());
 
   fetch(location.href).then(isInitial ? () => null : response => {
     if (!isInitial && response.ok) {
@@ -31,8 +34,13 @@ function swapFragment(filePath) {
     if (response.ok) {
       response.text().then(text => {
         fragment.innerHTML = text;
-        console.info(`[${fragmentId}]: \`${filePath}\``);
+        console.info(`[${fragmentId}]: ${filePath}`);
       });
     }
   });
+}
+ 
+export function onNavigate(listener) {
+  listeners.push(listener);
+  return () => listeners = listeners.filter(item => item !== listener);
 }
