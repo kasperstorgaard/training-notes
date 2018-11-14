@@ -1,5 +1,7 @@
 import { LitElement, html } from '@polymer/lit-element';
 
+import style from './calendar.css';
+
 export class Calendar extends LitElement {
   static get properties() {
     return {};
@@ -7,6 +9,7 @@ export class Calendar extends LitElement {
 
   render() {
     return html`
+      <style>${style}</style>
       calendar component
     `;
   }

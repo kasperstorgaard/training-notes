@@ -1,6 +1,6 @@
-// rollup.config.js
 import alias from 'rollup-plugin-alias';
 import resolve from 'rollup-plugin-node-resolve';
+import postcss from 'rollup-plugin-postcss';
 
 export default {
   experimentalCodeSplitting: true,
@@ -27,6 +27,10 @@ export default {
     alias({
       '@components': './client/components',
     }),
-    resolve()
+    resolve(),
+    postcss({
+      inject: false,
+      use: ['sass']
+    })
   ]
 }
