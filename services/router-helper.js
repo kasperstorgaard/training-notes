@@ -25,7 +25,7 @@ module.exports.routerHelper = (view, config) => async (req, res, _next) => {
           response: {
             'Content-Type': 'text/html; charset=UTF-8',
             'Etag': fragment.hash,
-            'Cache-Control': 'private, max-age=31536000'
+            'Cache-Control': 'private, max-age=31536000, no-cache'
           }
         });
 
@@ -33,6 +33,7 @@ module.exports.routerHelper = (view, config) => async (req, res, _next) => {
       }
     });
 
+    res.setHeader('Cache-Control', 'stale-if-error=31536000');
     res.json({filePaths});
   }
 };

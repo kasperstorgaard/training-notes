@@ -5,11 +5,6 @@ export class Calendar extends LitElement {
     return {};
   }
 
-  connectedCallback() {
-    super.connectedCallback();
-    console.log('hey from calendar!');
-  }
-
   render() {
     return html`
       calendar component
