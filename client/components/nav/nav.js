@@ -1,6 +1,7 @@
 import { LitElement, html } from '@polymer/lit-element';
 
 import { onNavigate } from '../../router';
+import style from './nav.scss';
 
 export class Nav extends LitElement {
   static get properties() {
@@ -27,6 +28,7 @@ export class Nav extends LitElement {
 
   render() {
     return html`
+      <style>${style}</style>
       <style>
         ::slotted(a[href="${this.activePath.trim()}"]),
         ::slotted(a[href^="${this.activePath.trim() + '/'}"]) {
@@ -34,14 +36,6 @@ export class Nav extends LitElement {
           font-weight: bold;
         }
 
-        ::slotted(a) {
-          text-decoration: none;
-          text-transform: uppercase;
-        }
-
-        ::slotted(a:not(:first-child)) {
-          margin-left: 8px;
-        }
       </style>
       <slot></slot>
     `;
