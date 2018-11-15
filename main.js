@@ -7,8 +7,7 @@ const cookieParser = require('cookie-parser');
 const chalk = require('chalk');
 const logger = require('morgan')
 
-const homeRouter = require('./routes/home');
-const calendarRouter = require('./routes/calendar');
+const routes = require('./routes');
 
 const app = express();
 const port = 3000;
@@ -25,8 +24,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './public')));
 
 // routes
-app.use(homeRouter);
-app.use(calendarRouter);
+app.use(routes);
 
 spdy
   .createServer(options, app)
