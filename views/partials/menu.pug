@@ -1,7 +1,8 @@
 include ../mixins/script.pug
 
-tn-nav-item(url='/') home
-tn-nav-item(url='/calendar') calendar
-tn-nav-item(url='/excercises') exercises
+tn-nav
+  a(href='/') home
+  a(href='/calendar') calendar
+  a(href='/excercises') exercises
 
 +script('components/nav.js')
