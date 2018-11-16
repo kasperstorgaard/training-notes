@@ -32,5 +32,9 @@ export default {
       inject: false,
       use: ['sass']
     })
-  ]
+  ],
+  watch: {
+    include: 'client/**',
+    exclude: 'node_modules/**'
+  }
 }
