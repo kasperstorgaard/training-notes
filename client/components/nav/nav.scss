@@ -1,8 +1,28 @@
-::slotted(a) {
-  text-decoration: none;
-  text-transform: uppercase;
+:host {
+  display: flex;
 }
 
-::slotted(a:not(:first-child)) {
-  margin-left: var(--spacing-l);
+nav {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  display: flex;
+}
+
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+
+  overflow: hidden;
+  height: auto;
+  transition:max-height 0.14s ease-in-out;
+}
+
+.dropdown:not(.m-open) {
+  max-height: 0 !important;
 }

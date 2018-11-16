@@ -1,1 +1,20 @@
-include ./menu
+include ../mixins/script.pug
+
+a(href='/').header-logo logo
+tn-nav.header-nav
+  ul.header-links
+    li.header-link-item
+      a(href='/') home
+    li.header-link-item
+      a(href='/calendar') calendar
+    li.header-link-item
+      a(href='/exercises') exercises
+  ul(slot="dropdown").header-dropdown
+    li.header-dropdown-item
+      a(href='/') home
+    li.header-dropdown-item
+      a(href='/calendar') calendar
+    li.header-dropdown-item
+      a(href='/exercises') exercises
+
++script('components/nav.js')
