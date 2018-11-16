@@ -1,6 +1,8 @@
-@import './styles/layout.scss';
-@import './styles/spacing.scss';
-@import './styles/typography.scss';
+@import './styles/spacing';
+@import './styles/typography';
+@import './styles/colors';
+@import './styles/layout';
+@import './styles/header';
 
 html {
   font-family: sans-serif;

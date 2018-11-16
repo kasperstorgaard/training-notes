@@ -1,16 +1,24 @@
-.layout {
-  
+body {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.layout-header,
+.layout-main,
+.layout-footer {
+  padding-right: var(--spacing-m);
+  padding-left: var(--spacing-m);
 }
 
 .layout-header {
-
+  padding-top: var(--spacing-s);
 }
 
 .layout-main {
-
+  background-color: var(--color-background);
 }
 
 .layout-footer {
-
+  padding-bottom: var(--spacing-s);
 }
 
