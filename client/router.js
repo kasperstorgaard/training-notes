@@ -33,7 +33,9 @@ function swapFragment(filePath) {
   req.then(response => {
     if (response.ok) {
       response.text().then(text => {
-        fragment.innerHTML = text;
+        const {html, scripts} = extractScripts(text);
+        fragment.innerHTML = html;
+        scripts.forEach(script => addScript(script));
         console.info(`[${fragmentId}]: ${filePath}`);
       });
     }
@@ -43,4 +45,23 @@ function swapFragment(filePath) {
 export function onNavigate(listener) {
   listeners.push(listener);
   return () => listeners = listeners.filter(item => item !== listener);
+}
+
+function extractScripts(text) {
+  const scripts = [];
+  const html = text.replace(/<script [^>]+>(?:<\/script>)?\s*\n?/g, script => {
+    scripts.push(script.trim());
+    return '';
+  });
+  return {html, scripts};
+}
+
+function addScript(text) {
+  const div = document.createElement('div');
+  div.innerHTML = text;
+  const original = div.querySelector('script');
+  const script = document.createElement('script');
+  Array.from(original.attributes).forEach(attribute => 
+    script.setAttribute(attribute.name, attribute.value));
+  document.body.appendChild(script);
 }
