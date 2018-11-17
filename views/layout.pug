@@ -7,10 +7,11 @@ html
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     title Training notes
     meta(name='viewport', content='width=device-width, initial-scale=1')
-  body
+  body.layout
     header.layout-header
       include ./partials/header
     main.layout-main#fragment-main
       block main
     footer.layout-footer
+      include ./partials/footer
     +script('main.js')

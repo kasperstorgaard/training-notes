@@ -1,8 +1,10 @@
+@import './styles/reset';
 @import './styles/spacing';
 @import './styles/typography';
 @import './styles/colors';
 @import './styles/layout';
 @import './styles/header';
+@import './styles/footer';
 
 html {
   font-family: sans-serif;
