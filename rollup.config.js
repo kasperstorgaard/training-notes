@@ -39,8 +39,7 @@ export default {
     }),
     resolve(),
     postcss({
-      inject: false,
-      plugins: [cssImports()]
+      inject: false
     })
   ],
   watch: {
