@@ -1,14 +1,23 @@
-import alias from 'rollup-plugin-alias';
-import resolve from 'rollup-plugin-node-resolve';
-import postcss from 'rollup-plugin-postcss';
-import cssImports from 'postcss-import';
+const glob = require('glob');
+const alias = require('rollup-plugin-alias');
+const resolve = require('rollup-plugin-node-resolve');
+const postcss = require('rollup-plugin-postcss');
+const cssImports = require('postcss-import');
+
+const buildLookup = (lookup, filePath) => {
+  const key = filePath.replace(/(^\.\/|\.js$)/g, '');
+  lookup[key] = filePath;
+  return lookup;
+}
+
+const views = glob.sync('./views/**/*.js').reduce(buildLookup, {});
+const components = glob.sync('./components/**/*.js').reduce(buildLookup, {});
 
 export default {
   experimentalCodeSplitting: true,
   input: {
-    'main': './client/main.js',
-    'components/nav': './client/components/nav/nav.js',
-    'components/calendar': './client/components/calendar.js'
+    ...views,
+    ...components
   },
   output: [
   // ES module version, for modern browsers
@@ -26,7 +35,7 @@ export default {
   name: 'TrainingNotes',
   plugins: [
     alias({
-      '@components': './client/components',
+      '@components': './components',
     }),
     resolve(),
     postcss({
@@ -35,7 +44,6 @@ export default {
     })
   ],
   watch: {
-    include: 'client/**',
     exclude: 'node_modules/**'
   }
 }

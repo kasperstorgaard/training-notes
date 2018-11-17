@@ -9,9 +9,9 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1')
   body.layout
     header.layout-header
-      include ./partials/header
+      include ./partials/header/header
     main.layout-main#fragment-main
       block main
     footer.layout-footer
-      include ./partials/footer
-    +script('main.js')
+      include ./partials/footer/footer
+    +script('views/index.js')

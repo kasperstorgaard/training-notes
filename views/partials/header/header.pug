@@ -1,7 +1,7 @@
-include ../mixins/script.pug
+include ../../mixins/script.pug
 
 a(href='/').header-logo 
-  include ./logo
+  include ../logo/logo
 tn-nav.header-nav
   ul.header-links
     li.header-link-item
@@ -20,4 +20,5 @@ tn-nav.header-nav
     li.header-dropdown-item
       a() login
 
-+script('components/nav.js')
++script('views/partials/header/header.js')
++script('components/nav/nav.js')
