@@ -32,6 +32,8 @@ body {
 }
 
 .layout-main {
+  padding-top: var(--spacing-l);
+  padding-bottom: var(--spacing-l);
   background-color: var(--color-background);
   flex-grow: 1;
 }
