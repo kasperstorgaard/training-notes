@@ -3,6 +3,8 @@ import { installRouter } from 'pwa-helpers/router'
 let listeners = [];
 let isInitial = true;
 
+const scriptKeys = {};
+
 installRouter((location) => {
   if (location.hostname !== window.location.hostname) {
     window.location.href = location.href;
@@ -60,8 +62,15 @@ function addScript(text) {
   const div = document.createElement('div');
   div.innerHTML = text;
   const original = div.querySelector('script');
+
+  if (scriptKeys[original.getAttribute('src')]) {
+    return;
+  }
+
   const script = document.createElement('script');
   Array.from(original.attributes).forEach(attribute => 
     script.setAttribute(attribute.name, attribute.value));
   document.body.appendChild(script);
+
+  scriptKeys[script.getAttribute('src')] = true;
 }
