@@ -1,5 +1,5 @@
 :root {
-  // font
+  /* font */
   --color-font: rgba(0, 0, 0, 0.9);
   --color-font-dimmed: rgba(0, 0, 0, 0.6);
 
@@ -8,21 +8,21 @@
   --color-info: blue;
   --color-success: green;
 
-  // background
+   /* background */
   --color-background: white;
 
-  // border
+  /* border */
   --color-border: black;
 }
 
 .theme-secondary {
-  // font
+  /* font */
   --color-font: white;
   --color-font-dimmed: rgba(255, 255, 255, 0.8);
 
-  // background
+  /* background */
   --color-background: #2d2926;
 
-  // border
+  /* border */
   --color-border: white;
 }

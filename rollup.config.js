@@ -1,6 +1,7 @@
 import alias from 'rollup-plugin-alias';
 import resolve from 'rollup-plugin-node-resolve';
 import postcss from 'rollup-plugin-postcss';
+import cssImports from 'postcss-import';
 
 export default {
   experimentalCodeSplitting: true,
@@ -30,7 +31,7 @@ export default {
     resolve(),
     postcss({
       inject: false,
-      use: ['sass']
+      plugins: [cssImports()]
     })
   ],
   watch: {

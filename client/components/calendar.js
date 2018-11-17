@@ -1,6 +1,6 @@
 import { LitElement, html } from '@polymer/lit-element';
 
-import style from './calendar.scss';
+import style from './calendar.css';
 
 export class Calendar extends LitElement {
   static get properties() {
