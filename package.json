@@ -5,7 +5,8 @@
   "main": "./main.js",
   "scripts": {
     "build:js": "rollup -c",
-    "clean": "rimraf ./public",
+    "build": "run-p build:*",
+    "clean": "rimraf ./public && mkdirp public/js",
     "dev:client": "rollup -c -w",
     "dev:server": "nodemon \"npm run build\"",
     "dev": "run-s clean && run-p dev:*",
