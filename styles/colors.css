@@ -15,11 +15,11 @@
   --color-warn: var(--color-6);
   --color-error: var(--color-5);
   --color-info: var(--color-1);
-  --color-success: var(--color-2);
+  --color-success: var(--color-3);
 
    /* background */
   --color-background: var(--color-7);
-  --color-background-brand: var(--color-3);
+  --color-background-brand: var(--color-2);
 
   /* border */
   --color-border: black;
