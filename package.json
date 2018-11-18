@@ -50,10 +50,11 @@
     "rollup-plugin-postcss": "^1.6.2"
   },
   "nodemonConfig": {
-    "ext": "*.pug",
+    "ext": "*.pug, *.js",
     "ignore": [
       "node_modules/**",
-      "public/**"
+      "public/**",
+      "@(views|components)/**.js"
     ]
   }
 }
