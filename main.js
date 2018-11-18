@@ -3,6 +3,7 @@ const path = require('path');
 
 const spdy = require('spdy')
 const express = require('express');
+const compression = require('compression')
 const cookieParser = require('cookie-parser');
 const chalk = require('chalk');
 const logger = require('morgan')
@@ -19,7 +20,9 @@ const options = {
 
 // setup
 app.set('view engine', 'pug');
+
 app.use(logger('dev'))
+app.use(compression());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, './public')));
 
