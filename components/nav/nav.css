@@ -3,7 +3,6 @@
 }
 
 nav {
-  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,7 +17,7 @@ button {
 .dropdown {
   position: absolute;
   right: 0;
-  top: 100%;
+  top: calc(100% + 1px);
 
   overflow: hidden;
   height: auto;

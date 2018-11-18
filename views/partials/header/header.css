@@ -25,14 +25,14 @@
 }
 
 .header-link-item:not(:first-child) {
-  margin-left: var(--spacing-m);
+  margin-left: var(--spacing-s);
 }
 
 .header-nav a {
   display: block;
   box-sizing: border-box;
   line-height: 2.5em;
-  padding: 0 var(--spacing-m);
+  padding: 0 var(--spacing-s);
   text-decoration: none;
   color: var(--color-font-dimmed);
 }
@@ -44,6 +44,8 @@
 .header-dropdown {
   display: flex;
   flex-direction: column;
+  padding: var(--spacing-s) var(--spacing-m);
+  background-color: var(--color-4);
 }
 
 .header-logo {
