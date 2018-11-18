@@ -2,7 +2,6 @@ const glob = require('glob');
 const alias = require('rollup-plugin-alias');
 const resolve = require('rollup-plugin-node-resolve');
 const postcss = require('rollup-plugin-postcss');
-const cssImports = require('postcss-import');
 
 const buildLookup = (lookup, filePath) => {
   const key = filePath.replace(/(^\.\/|\.js$)/g, '');
