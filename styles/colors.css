@@ -1,15 +1,25 @@
 :root {
+  /* main colors */
+  --color-1: rgba(36, 123, 160, 1);
+  --color-2: rgba(112, 193, 179, 1);
+  --color-3: rgba(178, 219, 191, 1);
+  --color-4: rgba(243, 255, 189, 1);
+  --color-5: rgba(255, 22, 84, 1);
+  --color-6: rgb(255, 146, 22);
+  --color-7: rgb(250, 249, 249);
+
   /* font */
   --color-font: rgba(0, 0, 0, 0.9);
   --color-font-dimmed: rgba(0, 0, 0, 0.6);
 
-  --color-warn: orange;
-  --color-error: red;
-  --color-info: blue;
-  --color-success: green;
+  --color-warn: var(--color-6);
+  --color-error: var(--color-5);
+  --color-info: var(--color-1);
+  --color-success: var(--color-2);
 
    /* background */
-  --color-background: white;
+  --color-background: var(--color-7);
+  --color-background-brand: var(--color-3);
 
   /* border */
   --color-border: black;

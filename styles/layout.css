@@ -19,7 +19,6 @@ body {
 .layout-footer {
   padding-right: var(--spacing-m);
   padding-left: var(--spacing-m);
-  background-color: var(--color-background);
 }
 
 .layout-header {
@@ -29,6 +28,7 @@ body {
   padding-top: var(--spacing-m);
   padding-bottom: var(--spacing-m);
   border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-background-brand);
 }
 
 .layout-main {
@@ -36,6 +36,7 @@ body {
   padding-bottom: var(--spacing-l);
   background-color: var(--color-background);
   flex-grow: 1;
+  background-color: var(--color-background);
 }
 
 .layout-footer {
@@ -44,5 +45,6 @@ body {
   padding-top: var(--spacing-m);
   padding-bottom: var(--spacing-m);
   border-top: 1px solid var(--color-border);
+  background-color: var(--color-background-brand);
 }
 
