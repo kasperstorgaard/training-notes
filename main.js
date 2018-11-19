@@ -15,7 +15,7 @@ const port = 3000;
 
 const options = {
   key: fs.readFileSync(path.join(__dirname, 'server.key')),
-  cert:  fs.readFileSync(path.join(__dirname, 'server.crt'))
+  cert: fs.readFileSync(path.join(__dirname, 'server.crt'))
 }
 
 // setup
