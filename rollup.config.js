@@ -2,6 +2,7 @@ const glob = require('glob');
 const alias = require('rollup-plugin-alias');
 const resolve = require('rollup-plugin-node-resolve');
 const postcss = require('rollup-plugin-postcss');
+const cleanup = require('rollup-plugin-cleanup');
 
 const buildLookup = (lookup, filePath) => {
   const key = filePath.replace(/(^\.\/|\.js$)/g, '');
@@ -39,7 +40,8 @@ export default {
     resolve(),
     postcss({
       inject: false
-    })
+    }),
+    cleanup()
   ],
   watch: {
     exclude: 'node_modules/**'
