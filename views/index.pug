@@ -1,13 +1,12 @@
 include ./mixins/script.pug
 
 doctype html
-html
+html(class='page-' + name)
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     title Training notes
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet")
   body.layout
     header.layout-header
       include ./partials/header/header
@@ -16,3 +15,6 @@ html
     footer.layout-footer
       include ./partials/footer/footer
     +script('views/index.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js')
+    script(defer async).
+      WebFont.load({google: {families: ['Work Sans']}})
