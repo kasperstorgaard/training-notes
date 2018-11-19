@@ -4,14 +4,16 @@
   "description": "app to keep track of and take notes for your training sessions",
   "main": "./main.js",
   "scripts": {
-    "build:js": "rollup -c",
-    "build": "run-p build:*",
     "clean": "rimraf ./public && mkdirp public/js",
-    "dev:client": "rollup -c -w",
-    "dev:server": "nodemon \"npm run build\"",
+    "dev:css": "NODE_ENV='development' node ./styles.js -w",
+    "dev:js": "NODE_ENV='development' rollup -c -w",
+    "dev:server": "nodemon \"NODE_ENV='development' node ./main.js\"",
     "dev": "run-s clean && run-p dev:*",
-    "server": "node ./main.js",
-    "start": "run-s clean build:* server",
+    "prod:css": "NODE_ENV='production' node ./styles.js",
+    "prod:js": "NODE_ENV='production' rollup -c",
+    "prod": "run-s clean && run-p prod:*",
+    "server": "NODE_ENV='production' node ./main.js",
+    "start": "npm run prod && npm run server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -42,15 +44,19 @@
   },
   "devDependencies": {
     "@types/express": "^4.16.0",
+    "chokidar": "^2.0.4",
     "glob": "^7.1.3",
     "nodemon": "^1.18.5",
     "npm-run-all": "^4.1.3",
     "rimraf": "^2.6.2",
     "rollup": "^0.67.0",
     "rollup-plugin-alias": "^1.4.0",
+    "rollup-plugin-cleanup": "^3.0.0",
     "rollup-plugin-node-resolve": "^3.4.0",
     "rollup-plugin-postcss": "^1.6.2",
-    "rollup-plugin-terser": "^3.0.0"
+    "rollup-plugin-terser": "^3.0.0",
+    "uglifycss": "0.0.29",
+    "yargs": "^12.0.4"
   },
   "nodemonConfig": {
     "ext": "*.pug, *.js",
