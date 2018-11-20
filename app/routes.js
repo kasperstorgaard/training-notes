@@ -1,6 +1,6 @@
 const express = require('express');
 
-const {routerHelper} = require('./services/router-helper');
+const {routerHelper} = require('../services/router-helper');
 
 const router = express.Router();
 

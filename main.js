@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const chalk = require('chalk');
 const logger = require('morgan')
 
-const routes = require('./routes');
+const routes = require('./app/routes');
 
 const app = express();
 const port = 3000;
