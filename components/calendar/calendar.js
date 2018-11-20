@@ -25,7 +25,6 @@ export class Calendar extends LitElement {
   }
 
   render() {
-    console.log(this.date);
     return html`
       <style>${style}</style>
       <h2 class="month-year">${format(this.date, 'MMMM YYYY')}</h2>
