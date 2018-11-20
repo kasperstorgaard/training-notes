@@ -5,12 +5,10 @@
   "main": "./main.js",
   "scripts": {
     "clean": "rimraf ./public && mkdirp public/js",
-    "dev:css": "NODE_ENV='development' node ./styles.js -w",
     "dev:js": "NODE_ENV='development' rollup -c -w",
     "dev:server": "nodemon \"NODE_ENV='development' node ./main.js\"",
     "dev:resources": "NODE_ENV='development' node ./resources.js",
     "dev": "run-s clean && run-p dev:*",
-    "prod:css": "NODE_ENV='production' node ./styles.js",
     "prod:js": "NODE_ENV='production' rollup -c",
     "prod:resources": "NODE_ENV='production' node ./resources.js\"",
     "prod": "run-s clean && run-p prod:*",
