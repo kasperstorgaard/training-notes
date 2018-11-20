@@ -26,8 +26,11 @@ export class Nav extends LitElement {
     this._clickOutsideHandler = () => this.open = false;
     document.addEventListener('click', this._clickOutsideHandler);
 
-    // need to wait for the slot to be ready.
-    setTimeout(() => this._maxDropdownHeight = this._getMaxDropdownHeight());
+    // need to wait for the slot to be ready, then remove hidden from the dropdown.
+    setTimeout(() => {
+      this._dropdownNodes = this._getDropdownNodes();
+      this._dropdownNodes.forEach(node => node.removeAttribute('hidden'));
+    });
 
     this._unsub = onNavigate(() => this._updateActiveLinks());
   }
@@ -39,6 +42,8 @@ export class Nav extends LitElement {
   }
 
   render() {
+    this._maxDropdownHeight = this._getTotalHeight(this._dropdownNodes);
+
     return html`
       <style>${style}</style>
       <nav>
@@ -83,10 +88,13 @@ export class Nav extends LitElement {
     return pathname.length === href.length || pathname[href.length] === '/';
   }
 
-  _getMaxDropdownHeight() {
+  _getTotalHeight(nodes = []) {
+    return nodes.reduce((total, node) => total + node.getBoundingClientRect().height, 0);
+  }
+
+  _getDropdownNodes() {
     const slot = this.shadowRoot.querySelector('.dropdown-slot');
-    return Array.from(slot.assignedNodes())
-      .reduce((total, node) => total + node.getBoundingClientRect().height, 0);
+    return Array.from(slot.assignedNodes());
   }
   
   _toggleButtonHandler(event) {
