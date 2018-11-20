@@ -21,6 +21,7 @@
 .footer-icon-credit {
   width: 100%;
   font-size: var(--font-size-s);
+  text-align: center;
 }
 
 .footer-icon-credit a {
