@@ -68,5 +68,5 @@ async function uglifyFile(src) {
 }
 
 function getDest(relativeSrc) {
-  return path.join(baseDir, relativeSrc);
+  return path.join(baseDir, relativeSrc.replace(/\/views\//, '/'));
 }

@@ -6,8 +6,16 @@ html(class='page-' + name)
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     title Training notes
-    link(rel='preload' href='js/components/router.js' as='script')
+    link(rel='preload' href='js/module/shared/router.js' as='script')
     meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel='stylesheet' href='css/shared/reset.css' type='text/css')
+    link(rel='stylesheet' href='css/shared/colors.css' type='text/css')
+    link(rel='stylesheet' href='css/shared/spacing.css' type='text/css')
+    link(rel='stylesheet' href='css/shared/typography.css' type='text/css')
+    link(rel='stylesheet' href='css/shared/layout.css' type='text/css')
+    link(rel='stylesheet' href='css/partials/footer/footer.css' type='text/css')
+    link(rel='stylesheet' href='css/partials/header/header.css' type='text/css')
+    link(rel='stylesheet' href='css/partials/footer/footer.css' type='text/css')
   body.layout
     header.layout-header
       include ./partials/header/header
@@ -15,5 +23,4 @@ html(class='page-' + name)
       block main
     footer.layout-footer
       include ./partials/footer/footer
-    
-    +script('views/index.js')
+    +script('shared/router.js')

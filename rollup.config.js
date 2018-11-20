@@ -5,7 +5,7 @@ const postcss = require('rollup-plugin-postcss');
 const cleanup = require('rollup-plugin-cleanup');
 
 const buildLookup = (lookup, filePath) => {
-  const key = filePath.replace(/(^\.\/|\.js$)/g, '');
+  const key = filePath.replace(/(^\.\/(views\/)?|\.js$)/g, '');
   lookup[key] = filePath;
   return lookup;
 }

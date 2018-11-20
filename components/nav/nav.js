@@ -1,6 +1,6 @@
 import { LitElement, html } from '@polymer/lit-element';
 
-import { onNavigate } from '../router';
+import { onNavigate } from '../../views/shared/router';
 import style from './nav.css';
 
 let index = 0;
