@@ -20,6 +20,7 @@ const options = {
 
 // setup
 app.set('view engine', 'pug');
+app.set('views', './app');
 
 app.use(logger('dev'))
 app.use(compression());

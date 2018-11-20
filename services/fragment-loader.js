@@ -15,7 +15,7 @@ const writeFileAsync = promisify(fs.writeFile);
 const existsAsync = promisify(fs.exists);
 const readFileAsync = promisify(fs.readFile);
 
-const viewDir = path.join(__dirname, '../views');
+const appDir = path.join(__dirname, '../app');
 const publicDir = path.join(__dirname, '../public');
 
 const ensurePug = ensureSuffix('.pug');
@@ -31,7 +31,7 @@ function ensureSuffix(suffix) {
 }
 
 function loadAst(view) {
-  const filePath = path.join(viewDir, ensurePug(view));
+  const filePath = path.join(appDir, ensurePug(view));
 
   const ast = load.file(filePath, {
     lex,

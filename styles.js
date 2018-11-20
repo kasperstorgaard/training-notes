@@ -19,7 +19,7 @@ const baseDir = path.join(__dirname, 'public/css');
 const isWatch = argv.w || argv.watch;
 const isProd = process.env.NODE_ENV === 'production';
 
-const pattern = './views/**/*.css';
+const pattern = './app/**/*.css';
 
 (async function run() {
   const filePaths = await globAsync(pattern);
@@ -68,5 +68,5 @@ async function uglifyFile(src) {
 }
 
 function getDest(relativeSrc) {
-  return path.join(baseDir, relativeSrc.replace(/\/views\//, '/'));
+  return path.join(baseDir, relativeSrc.replace(/\/app\//, '/'));
 }

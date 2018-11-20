@@ -65,7 +65,7 @@
     "ignore": [
       "node_modules/**",
       "public/**",
-      "@(views|components)/**.js"
+      "@(app|components)/**.js"
     ]
   }
 }

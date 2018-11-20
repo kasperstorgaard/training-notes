@@ -15,7 +15,7 @@ const mkdirpAsync = promisify(mkdirp)
 const baseDir = path.join(__dirname, 'public');
 const isWatch = argv.w || argv.watch;
 
-const pattern = './views/**/*.@(woff|woff2|png|jpg|jpeg)';
+const pattern = './app/**/*.@(woff|woff2|png|jpg|jpeg)';
 
 (async function run() {
   const filePaths = await globAsync(pattern);
@@ -56,7 +56,7 @@ async function copyFile(src) {
 function getDest(relativeSrc) {
   const type = relativeSrc.match(/\.([^\.]+)$/)[1];
   const basePath = path.join(baseDir, relativeSrc);
-  return basePath.replace(/\/views\//, () => {
+  return basePath.replace(/\/app\//, () => {
     switch (type) {
       case 'woff':
       case 'woff2':

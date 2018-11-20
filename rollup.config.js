@@ -5,18 +5,18 @@ const postcss = require('rollup-plugin-postcss');
 const cleanup = require('rollup-plugin-cleanup');
 
 const buildLookup = (lookup, filePath) => {
-  const key = filePath.replace(/(^\.\/(views\/)?|\.js$)/g, '');
+  const key = filePath.replace(/(^\.\/(app\/)?|\.js$)/g, '');
   lookup[key] = filePath;
   return lookup;
 }
 
-const views = glob.sync('./views/**/*.js').reduce(buildLookup, {});
+const app = glob.sync('./app/**/*.js').reduce(buildLookup, {});
 const components = glob.sync('./components/**/*.js').reduce(buildLookup, {});
 
 export default {
   experimentalCodeSplitting: true,
   input: {
-    ...views,
+    ...app,
     ...components
   },
   output: [
