@@ -1,6 +1,7 @@
 const glob = require('glob');
 const alias = require('rollup-plugin-alias');
 const resolve = require('rollup-plugin-node-resolve');
+const commonjs = require('rollup-plugin-commonjs');
 const postcss = require('rollup-plugin-postcss');
 const cleanup = require('rollup-plugin-cleanup');
 
@@ -38,6 +39,9 @@ export default {
       '@components': './components',
     }),
     resolve(),
+    commonjs({
+      include: 'node_modules/**'
+    }),
     postcss({
       inject: false
     }),
