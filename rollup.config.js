@@ -12,13 +12,14 @@ const buildLookup = (lookup, filePath) => {
 }
 
 const app = glob.sync('./app/**/*.js').reduce(buildLookup, {});
-const components = glob.sync('./components/**/*.js').reduce(buildLookup, {});
+const components = glob.sync('./components/**/index.js').reduce(buildLookup, {});
 
 export default {
   experimentalCodeSplitting: true,
   input: {
-    ...app,
-    ...components
+    'components/calendar': './components/calendar/calendar.js',
+    'components/nav': './components/nav/nav.js',
+    'components/router': './components/router/router.js'
   },
   output: [
   // ES module version, for modern browsers
