@@ -3,18 +3,15 @@ import format from 'date-fns/format'
 
 import style from './calendar.css';
 
-const dummyData = [{
-  date: new Date(2019, 0, 2),
-  notes: [
-    'Probably should get started right in the new year, ugh.',
-    'Focus on chinup form.'
-  ].join('\n')
-}];
+const daysBeforeLimit = 365;
+const daysAfterLimit = 730;
+const millisPerDay = 1000 * 60 * 60 * 24;
 
 export class Calendar extends LitElement {
   static get properties() {
     return {
       date: String,
+      days: Array,
       type: String
     };
   }
@@ -22,38 +19,72 @@ export class Calendar extends LitElement {
   constructor() {
     super();
     this.date = this.date || new Date(Date.now());
+    const data = dummyData();
+
+    const startDate = new Date(data[0].date.getTime() - 10 * millisPerDay);
+    const endDate = new Date(data[data.length - 1].date.getTime() + 10 * millisPerDay);
+    this.days = this._createRange(startDate, endDate, data);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
   }
 
   render() {
     return html`
       <style>${style}</style>
       <h2 class="month-year">${format(this.date, 'MMMM YYYY')}</h2>
-      ${this._renderDayView(dummyData)}
+      <div class="viewport">
+        <ul class="days">
+          ${this.days.map(day => html`
+            <li class="day">
+              <div class="day-data">
+                <span class="day-weekday">${format(day.date, 'ddd')}</span>
+                <span class="day-number">${format(day.date, 'D')}</span>
+              </div>
+              <p class="notes">${day.notes || ''}</p>
+            </li>
+          `)}
+        </ul>
+      </div>
     `;
   }
 
-  _renderDayView(days) {
-    return html`
-      <ul class="days">
-        ${days.map(day => this._renderDay(day))}
-      </ul>
-    `;
-  }
+  _createRange(startDate, endDate, data = []) {
+    const existing = data.slice();
+    const output = [];
 
-  _renderDay(day) {
-    return html`
-      <li class="day">
-        <div class="day-data">
-          <span class="day-number">${format(day.date, 'D')}</span>
-          <span class="day-weekday">${format(day.date, 'ddd')}</span>
-        </div>
-        <p>${day.notes || ''}</p>
-      </li>
-    `;
-  }
+    let date = startDate;
+    let model = existing.shift();
 
-  _renderWeek() {}
-  _renderMonth() {}
+    while (date <= endDate) {
+      if (!model || date < model.date) {
+        output.push({date})
+      } else {
+        output.push(model);
+        model = existing.shift();
+      }
+
+      date = new Date(date.getTime() + millisPerDay);
+    }
+
+    return output;
+  }
 }
 
 customElements.define('tn-calendar', Calendar);
+
+function dummyData() {
+    return [{
+      date: new Date(2018, 9, 14),
+      notes: [
+        'Solid workout, x5 slow excentric chinup.',
+      ].join('\n')
+    }, {
+      date: new Date(2019, 0, 2),
+      notes: [
+        'Probably should get started right in the new year, ugh.',
+        'Focus on chinup form.'
+      ].join('\n')
+    }];
+}

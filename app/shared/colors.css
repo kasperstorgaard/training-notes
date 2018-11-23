@@ -23,6 +23,7 @@
 
   /* border */
   --color-border: black;
+  --color-border-dimmed: rgba(0, 0, 0, 0.4);
 }
 
 .theme-secondary {

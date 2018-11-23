@@ -1,20 +1,41 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+}
+
+.viewport {
+  flex-grow: 1;
+  position: relative;
+  overflow: scroll;
 }
 
 .days {
-  margin: 0;
-  padding: 0;
   display: block;
+  position: absolute;
+  width: 100%;
+  padding: 0;
 }
 
 .day {
   display: flex;
+  margin-bottom: var(--spacing-m);
 }
 
-.day p {
+.notes {
   margin: 0;
   padding: 0 0 0 var(--spacing-m);
+  min-height: 3em;
+  width: 100%;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent calc(1.5em - 2px),
+    var(--color-border-dimmed) calc(1.5em - 2px),
+    var(--color-border-dimmed) calc(1.5em - 1px),
+    transparent calc(1.5em - 1px),
+    transparent calc(3em - 2px),
+    var(--color-border-dimmed) calc(3em - 2px),
+    var(--color-border-dimmed) calc(3em - 1px)
+  );
   white-space: pre-line;
 }
 
@@ -22,15 +43,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 3em;
   padding-right: var(--spacing-m);
-  font-size: var(--font-size-l);
-  border-right: 1px solid var(--color-border);
+  margin-right: var(--spacing-m);
+  font-size: var(--font-size-m);
+  text-align: right;
 }
 
-.day-number {
+.day-number, .day-weekday {
   display: block;
+  width: 100%;
 }
 
 .day-weekday {
-  display: block;
+  color: var(--color-font-dimmed);
+}
+ 
+.day-number {
+  font-size: var(--font-size-l);
 }
