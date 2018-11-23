@@ -7,7 +7,7 @@
     "clean": "rimraf ./public && mkdirp public/js",
     "dev:js": "NODE_ENV='development' rollup -c -w",
     "dev:server": "nodemon \"NODE_ENV='development' node ./main.js\"",
-    "dev:resources": "NODE_ENV='development' node ./resources.js",
+    "dev:resources": "NODE_ENV='development' node ./resources.js -w",
     "dev": "run-s clean && run-p dev:*",
     "prod:js": "NODE_ENV='production' rollup -c",
     "prod:resources": "NODE_ENV='production' node ./resources.js\"",
@@ -65,7 +65,8 @@
     "ignore": [
       "node_modules/**",
       "public/**",
-      "@(app|components)/**.js"
+      "app/**/*.js",
+      "components/**/*.js"
     ]
   }
 }
