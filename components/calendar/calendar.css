@@ -11,6 +11,12 @@
 
 .days {
   display: block;
+  width: 100%;
+  padding: 0;
+}
+
+.scroller {
+  display: block;
   position: absolute;
   width: 100%;
   padding: 0;

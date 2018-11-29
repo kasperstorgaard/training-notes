@@ -35,17 +35,34 @@ export class Calendar extends LitElement {
       <style>${style}</style>
       <h2 class="month-year">${format(this.date, 'MMMM YYYY')}</h2>
       <div class="viewport">
-        <ul class="days">
-          ${this.days.map(day => html`
-            <li class="day">
-              <div class="day-data">
-                <span class="day-weekday">${format(day.date, 'ddd')}</span>
-                <span class="day-number">${format(day.date, 'D')}</span>
-              </div>
-              <p class="notes">${day.notes || ''}</p>
-            </li>
-          `)}
-        </ul>
+        <div class="scroller">
+          <div class="buffer">
+            <ul class="days">
+              ${this.days.slice(0, this.days.length / 2).map(day => html`
+                <li class="day">
+                  <div class="day-data">
+                    <span class="day-weekday">${format(day.date, 'ddd')}</span>
+                    <span class="day-number">${format(day.date, 'D')}</span>
+                  </div>
+                  <p class="notes">${day.notes || ''}</p>
+                </li>
+              `)}
+            </ul>
+          </div>
+          <div class="buffer">
+            <ul class="days">
+              ${this.days.slice(this.days.length / 2).map(day => html`
+                <li class="day">
+                  <div class="day-data">
+                    <span class="day-weekday">${format(day.date, 'ddd')}</span>
+                    <span class="day-number">${format(day.date, 'D')}</span>
+                  </div>
+                  <p class="notes">${day.notes || ''}</p>
+                </li>
+              `)}
+            </ul>
+          </div>
+        </div>
       </div>
     `;
   }
