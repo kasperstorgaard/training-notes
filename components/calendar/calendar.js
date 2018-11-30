@@ -4,7 +4,7 @@ import format from 'date-fns/format'
 import style from './calendar.css';
 
 const millisPerDay = 1000 * 60 * 60 * 24;
-const viewportHeight = 100000;
+let idx = 0;
 
 export class Calendar extends LitElement {
   static get properties() {
@@ -33,25 +33,28 @@ export class Calendar extends LitElement {
     super.firstUpdated();
 
     this._viewport = this.shadowRoot.querySelector('.viewport');
-    this._buffers = Array.from(this.shadowRoot.querySelectorAll('.buffer'));
+    this._scroller = this.shadowRoot.querySelector('.scroller');
 
-    this._viewport.style.marginBottom = viewportHeight / 2;
-    this._viewport.scrollTop = viewportHeight / 2;
+    this._swapBuffers = Array.from(this.shadowRoot.querySelectorAll('.swap-buffer'));
+    this._distBuffers = Array.from(this.shadowRoot.querySelectorAll('.dist-buffer'));
+
+    this._viewport.scrollTop = (this._scroller.getBoundingClientRect().height) / 2;
 
     const options = {
       root: this._viewport,
-      threshold: [0, 1]
+      threshold: [0]
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (!entry.isIntersecting) {
-          this._swapBuffers(entry);
+        if (entry.isIntersecting) {
+          console.log('swap');
+          this._swap(entry);
         }
       });
     }, options);
 
-    this._buffers.forEach(buffer => observer.observe(buffer));
+    this._distBuffers.forEach(buffer => observer.observe(buffer));
   }
 
   render() {
@@ -60,47 +63,48 @@ export class Calendar extends LitElement {
       <h2 class="month-year">${format(this.date, 'MMMM YYYY')}</h2>
       <div class="viewport">
         <div class="scroller">
-          <div class="buffer">
-            <ul class="days">
-              ${this.days.slice(0, this.days.length / 2).map(day => html`
-                <li class="day">
-                  <div class="day-data">
-                    <span class="day-weekday">${format(day.date, 'ddd')}</span>
-                    <span class="day-number">${format(day.date, 'D')}</span>
-                  </div>
-                  <p class="notes">${day.notes || ''}</p>
-                </li>
-              `)}
-            </ul>
-          </div>
-          <div class="buffer">
-            <ul class="days">
-              ${this.days.slice(this.days.length / 2).map(day => html`
-                <li class="day">
-                  <div class="day-data">
-                    <span class="day-weekday">${format(day.date, 'ddd')}</span>
-                    <span class="day-number">${format(day.date, 'D')}</span>
-                  </div>
-                  <p class="notes">${day.notes || ''}</p>
-                </li>
-              `)}
-            </ul>
-          </div>
+          <div class="dist-buffer m-start"></div>
+          <ul class="days swap-buffer">
+            ${this.days.slice(0, this.days.length / 2).map(day => html`
+              <li class="day">
+                <div class="day-data">
+                  <span class="day-weekday">${format(day.date, 'ddd')}</span>
+                  <span class="day-number">${format(day.date, 'D')}</span>
+                </div>
+                <p class="notes">${day.notes || ''}</p>
+              </li>
+            `)}
+          </ul>
+          <ul class="days swap-buffer">
+            ${this.days.slice(this.days.length / 2).map(day => html`
+              <li class="day">
+                <div class="day-data">
+                  <span class="day-weekday">${format(day.date, 'ddd')}</span>
+                  <span class="day-number">${format(day.date, 'D')}</span>
+                </div>
+                <p class="notes">${day.notes || ''}</p>
+              </li>
+            `)}
+          </ul>
+          <div class="dist-buffer m-end"></div>
         </div>
       </div>
     `;
   }
 
-  _swapBuffers(entry) {
-    const prevFirstOrder = this._buffers[0].style.order;
-    const prevLastOrder = this._buffers[1].style.order;
-    this._buffers[0].style.order = prevLastOrder !== '' ? prevLastOrder : 0;
-    this._buffers[1].style.order = prevFirstOrder !== '' ? prevFirstOrder : 1;
+  _swap() {
+    const prevOrders = [
+      this._swapBuffers[0].style.order,
+      this._swapBuffers[1].style.order
+    ];
 
-    if (entry.boundingClientRect.y > 0) {
-      // const top = this._viewport.scrollTop;
-      // this._viewport.scrollTop = top + entry.boundingClientRect.height;
-    }
+    const viewportHeight = this._scroller.getBoundingClientRect().height;
+
+    this._swapBuffers[0].style.order = prevOrders[1] !== '' ? prevOrders[1] : 0;
+    this._swapBuffers[1].style.order = prevOrders[0] !== '' ? prevOrders[0] : 1;
+
+    this._viewport.scrollTop = viewportHeight / 2;
+    console.log(idx++, viewportHeight / 2, this._viewport.scrollTop);
   }
 
   _createRange(startDate, endDate, data = []) {

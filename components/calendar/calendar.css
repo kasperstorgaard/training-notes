@@ -15,12 +15,19 @@
   padding: 0;
 }
 
+.dist-buffer.m-start {
+  order: 0;
+}
+
+.dist-buffer.m-end {
+  order: 1000;
+}
+
 .scroller {
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: absolute;
-  height: 100000px;
   width: 100%;
 }
 
