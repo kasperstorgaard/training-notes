@@ -3,9 +3,8 @@ import format from 'date-fns/format'
 
 import style from './calendar.css';
 
-const daysBeforeLimit = 365;
-const daysAfterLimit = 730;
 const millisPerDay = 1000 * 60 * 60 * 24;
+const viewportHeight = 100000;
 
 export class Calendar extends LitElement {
   static get properties() {
@@ -28,6 +27,31 @@ export class Calendar extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+  }
+
+  firstUpdated() {
+    super.firstUpdated();
+
+    this._viewport = this.shadowRoot.querySelector('.viewport');
+    this._buffers = Array.from(this.shadowRoot.querySelectorAll('.buffer'));
+
+    this._viewport.style.marginBottom = viewportHeight / 2;
+    this._viewport.scrollTop = viewportHeight / 2;
+
+    const options = {
+      root: this._viewport,
+      threshold: [0, 1]
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+          this._swapBuffers(entry);
+        }
+      });
+    }, options);
+
+    this._buffers.forEach(buffer => observer.observe(buffer));
   }
 
   render() {
@@ -65,6 +89,18 @@ export class Calendar extends LitElement {
         </div>
       </div>
     `;
+  }
+
+  _swapBuffers(entry) {
+    const prevFirstOrder = this._buffers[0].style.order;
+    const prevLastOrder = this._buffers[1].style.order;
+    this._buffers[0].style.order = prevLastOrder !== '' ? prevLastOrder : 0;
+    this._buffers[1].style.order = prevFirstOrder !== '' ? prevFirstOrder : 1;
+
+    if (entry.boundingClientRect.y > 0) {
+      // const top = this._viewport.scrollTop;
+      // this._viewport.scrollTop = top + entry.boundingClientRect.height;
+    }
   }
 
   _createRange(startDate, endDate, data = []) {

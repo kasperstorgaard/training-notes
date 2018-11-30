@@ -16,10 +16,12 @@
 }
 
 .scroller {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: absolute;
+  height: 100000px;
   width: 100%;
-  padding: 0;
 }
 
 .day {
